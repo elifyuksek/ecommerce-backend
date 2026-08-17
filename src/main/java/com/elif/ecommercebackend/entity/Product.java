@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -13,18 +14,22 @@ import lombok.NoArgsConstructor;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    @Column(length = 2000)
     private String description;
+
     private Double price;
     private Integer stock;
+    private Long store_id;
+    private Long category_id;
     private Double rating;
-    private Integer sellCount;
-    private String images;
+    private Integer sell_count;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ElementCollection
+    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "image_url", length = 1000)
+    private List<String> images;
 }
