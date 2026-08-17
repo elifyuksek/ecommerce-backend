@@ -45,6 +45,7 @@ public class AuthController {
 
             if (user.getPassword() != null && user.getPassword().equals(password)) {
                 Map<String, Object> response = new HashMap<>();
+                response.put("id", user.getId());
                 response.put("name", user.getName());
                 response.put("email", user.getEmail());
                 response.put("role_id", user.getRoleId());
@@ -63,7 +64,11 @@ public class AuthController {
     @GetMapping({"/verify", "/auth/verify"})
     public ResponseEntity<?> verifyToken(@RequestHeader(value = "Authorization", required = false) String token) {
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "Token is valid");
+        response.put("name", "Elif");
+        response.put("email", "deneme@mail.com");
+        response.put("role_id", 3L);
+        response.put("token", (token != null && !token.isEmpty()) ? token : "dummy-jwt-token");
+
         return ResponseEntity.ok(response);
     }
 }
